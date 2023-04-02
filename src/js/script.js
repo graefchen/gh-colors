@@ -187,9 +187,9 @@ div.querySelector("input").addEventListener("input", (e) => {
 	// Clearing out the div
 	cardHolder.innerHTML = "";
 	// Getting the value of what is written in the field
-	var st2 = e.target.value;
+	var st2 = e.target.value.toLowerCase();
 
-	const filteredArray = languageArray.filter(v => v.name.indexOf(st2) >= 0);
+	const filteredArray = languageArray.filter(v => v.name.toLowerCase().indexOf(st2) >= 0);
 	const mappedArray = filteredArray.map((value, index) => {
 		var position = value.name.indexOf(st2);
 		var name = value.name;
