@@ -2,10 +2,6 @@ name: Update Colours
 on:
   schedule:
     - cron: '0 0 * * 3'
-  push:
-    paths-ignore:
-      - 'README.md'
-  workflow_dispatch:
 
 jobs:
   update_colours:
