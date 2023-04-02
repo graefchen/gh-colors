@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "js-yaml": "^4.1.0"
+  },
+  "name": "github-colors",
+  "description": "...",
+  "version": "1.0.0",
+  "main": "colours.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+	"start": "node colours.js"
+  },
+  "author": "graefchen",
+  "license": "MIT"
+}

@@ -1,0 +1,275 @@
+@charset "UTF-8";
+
+:root {
+	/* Mine */
+	/* --color-bg: #c9d1d9; */
+	--color-bg: #121212;
+	--color-fg: #ffffff;
+	--color-field: #1f1f1f;
+	--color-border: #c9d1d9;
+}
+
+html {
+	box-sizing: border-box;
+	z-index: 1;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: inherit;
+}
+
+body {
+	line-height: 1.5;
+	color: var(--color-fg);
+	background-color: var(--color-bg);
+	margin: 0;
+	padding: 0;
+}
+
+@media (min-width: 250px) {
+	.outer-wrapper main {
+		width: 100%;
+		margin: 0%;
+	}
+}
+
+@media (min-width: 610px) {
+	.outer-wrapper main {
+		width: 100%;
+		margin: auto;
+	}
+}
+
+@media (min-width: 866px) {
+	.outer-wrapper main {
+		width: 746px;
+	}
+}
+
+@media (min-width: 1122px) {
+	.outer-wrapper main {
+		width: 986px;
+	}
+}
+
+.outer-wrapper {
+	min-height: 100vh;
+	padding: 30px 32px 32px;
+}
+
+main {
+	margin: auto;
+	padding: 0;
+	width: 986px;
+}
+
+@media (min-width: 610px) {
+	main {
+		width: 530px;
+	}
+}
+
+@media (min-width: 866px) {
+	main {
+		width: 786px;
+	}
+}
+
+@media (min-width: 1122px) {
+	main {
+		width: 1042px;
+	}
+}
+
+a {
+	/* margin-right: 15px; */
+	width: 50%;
+	color: var(--color-fg);
+	text-decoration: underline;
+}
+
+a:hover {
+	color: hotpink;
+}
+
+a:hover {
+	box-shadow: none;
+	outline: 2px solid var(--color-fg);
+	outline-offset: -2px;
+	text-decoration: underline;
+	outline: none;
+}
+
+.search-wrapper {
+	padding: 30px 0 30px;
+	overflow: hidden;
+}
+
+.title {
+	/* display: inline-block; */
+	padding: auto;
+}
+
+#title-name {
+	text-align: center;
+	font-size: 900;
+}
+
+#title-text {
+	font-size: 500;
+	text-align: center;
+}
+
+.search-inner-wrapper {
+	display: flex;
+	z-index: 3;
+	height: 44px;
+	background-color: #3a3a3a;
+	border: 1px solid transparent;
+	background-size: 24px;
+	box-shadow: none;
+	border-radius: 8px;
+	margin: 0 auto;
+	width: 638px;
+	width: 100%;
+	max-width: 584px;
+}
+
+.search-field {
+	flex: 1;
+	display: flex;
+}
+
+.search-input {
+	font-size: 500;
+	flex: 100%;
+	background-color: transparent;
+	border: none;
+	color: var(--color-fg);
+	word-wrap: break-word;
+	margin-top: -2px;
+	text-align: center;
+	outline: none;
+}
+
+.cards-wrapper {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 42px 21px;
+}
+
+.card {
+	align-items: center;
+	text-align: center;
+	font-size: xx-large;
+	justify-content: center;
+	border-radius: 5px;
+	border-color: transparent;
+	background-color: var(--color-field);
+	height: 150px;
+	width: 100%;
+	cursor: pointer;
+}
+
+@media (min-width: 610px) {
+	.card {
+		width: 80%;
+	}
+}
+
+@media (min-width: 866px) {
+	.card {
+		width: 45%;
+	}
+}
+
+@media (min-width: 1122px) {
+	.card {
+		width: 30%;
+	}
+}
+
+.card:hover {
+	box-sizing: border-box;
+	/* box-shadow: 0px 0px 10px white; */
+	transform: translateY(-3px) scale(1.1);
+	border-radius: 0px;
+	z-index: 10;
+}
+
+.card .face {
+	transition: 0.5s;
+}
+
+.card .face.face1 {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 5px;
+	border-color: inherit;
+	transform: translateY(0px);
+	background-color: inherit;
+}
+
+.card .face.face1 a {
+	display: block;
+	color: inherit;
+	flex: 10;
+}
+
+.card:hover .face.face1 {
+	transform: translateY(-100px);
+	border-radius: 5px 5px 0px 0px;
+	z-index: 12;
+}
+
+.card .face.face2 {
+	font-size: medium;
+	border-color: inherit;
+	width: auto;
+	height: 100px;
+	position: absolute;
+	padding: 0;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	border: 0;
+	padding-left: 5%;
+	padding-right: 5%;
+	line-height: 1;
+	opacity: 0;
+	background-color: inherit;
+	color: inherit;
+
+	/* display: flex;
+	flex-direction: column;
+	justify-content: left; */
+	/* align-items: center; */
+	/* box-sizing: border-box;
+	box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8); */
+	transform: translateY(-100px);
+}
+
+.card:hover .face.face2 {
+	opacity: 1;
+	text-align: left;
+	position: relative;
+	height: auto;
+	border-radius: 0px 0px 5px 5px;
+	border-color: inherit;
+	z-index: 11;
+}
+
+.card .face.face2 a {
+	/* display: block; */
+	color: inherit;
+	flex: 10;
+}
+
+.card .face.face2 a:hover {
+	color: blue;
+}
