@@ -191,7 +191,7 @@ div.querySelector("input").addEventListener("input", (e) => {
 
 	const filteredArray = languageArray.filter(v => v.name.toLowerCase().indexOf(st2) >= 0);
 	const mappedArray = filteredArray.map((value, index) => {
-		var position = value.name.indexOf(st2);
+		var position = value.name.toLowerCase().indexOf(st2);
 		var name = value.name;
 		return ({ name, index, position });
 	});
