@@ -72,33 +72,6 @@ function swapNodes(n1, n2) {
 }
 
 /**
- * An UTF-8 encode algorithm to encode to UTF-8
- * @see http://www.webtoolkit.info/javascript_utf8.html
- * @param {*} string 
- * @returns 
- */
-function encode(string) {
-	string = string.replace(/\r\n/g,"\n");
-	var utftext = "";
-	for (var n = 0; n < string.length; n++) {
-		var c = string.charCodeAt(n);
-		if (c < 128) {
-			utftext += String.fromCharCode(c);
-		}
-		else if((c > 127) && (c < 2048)) {
-			utftext += String.fromCharCode((c >> 6) | 192);
-			utftext += String.fromCharCode((c & 63) | 128);
-		}
-		else {
-			utftext += String.fromCharCode((c >> 12) | 224);
-			utftext += String.fromCharCode(((c >> 6) & 63) | 128);
-			utftext += String.fromCharCode((c & 63) | 128);
-		}
-	}
-	return utftext;
-}
-
-/**
  * Creating a normal card
  * @param {Object[]} e
  */
@@ -128,7 +101,8 @@ const createCard = (e) => {
  */
 const createDetailedCard = (e) => {
 	var websites = document.createElement('p');
-	websites.innerHTML = `<a target=\"_blank\" href=\"https://github.com/topics/${e.name}l=${e.name}\">Github</a> - <a target=\"_blank\" href=\"https://github.com/trending/${e.name}?since=daily&spoken_language_code=\">Github Trending</a> - <a target=\"_blank\" href=\"https://google.com/search?q=${encode(`${e.name} ${e.type} language`)}\">Google</a>`;
+	const name = e.name.replaceAll("+","p");
+	websites.innerHTML = `<a target=\"_blank\" href=\"https://github.com/topics/${encodeURIComponent(name)}\">Github</a> - <a target=\"_blank\" href=\"https://github.com/trending/${encodeURIComponent(name)}?since=daily&spoken_language_code=\">Github Trending</a> - <a target=\"_blank\" href=\"https://google.com/search?q=${encodeURIComponent(`${name} ${e.type} language`)}\">Google</a>`;
 
 	var hexcode = document.createElement('p');
 	if (e.color != undefined) {
