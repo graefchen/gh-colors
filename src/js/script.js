@@ -1,6 +1,8 @@
-import json from '../json/languages.json' assert { type: 'json' };
+// this below does not work on firefox but on all other browsers.
+// import json from '../json/languages.json' assert { type: 'json' };
+// const languageArray = json;
 
-const languageArray = json;
+const languageArray = await (await fetch('./json/languages.json')).json();
 
 document.getElementById('search').value = "";
 
