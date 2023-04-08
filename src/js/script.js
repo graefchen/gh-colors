@@ -7,8 +7,16 @@ document.getElementById('search').value = "";
 // Getting the correct input value
 var div = document.getElementById("search-div");
 var cardHolder = document.getElementById("cards");
+var temporaryHolder = document.getElementById("temp");
 
-// https://stackoverflow.com/a/35970186
+/**
+ * A function that inverts an Color and returns the inverted hexcode
+ * in this case it is special and therefor the returned hexcode
+ * is either black(#000000) or white(#FFFFFF)
+ * @see https://stackoverflow.com/a/35970186
+ * @param {*} hex 
+ * @returns 
+ */
 function invertColor(hex) {
 	if (hex.indexOf('#') === 0) {
 		hex = hex.slice(1);
@@ -30,7 +38,13 @@ function invertColor(hex) {
 		: '#FFFFFF';
 }
 
-// https://stackoverflow.com/a/44562952
+/**
+ * A simple function that swaps two nodes in the DOM in HTML
+ * @see https://stackoverflow.com/a/44562952
+ * @param {*} n1 
+ * @param {*} n2 
+ * @returns 
+ */
 function swapNodes(n1, n2) {
 
 	var p1 = n1.parentNode;
@@ -58,6 +72,33 @@ function swapNodes(n1, n2) {
 }
 
 /**
+ * An UTF-8 encode algorithm to encode to UTF-8
+ * @see http://www.webtoolkit.info/javascript_utf8.html
+ * @param {*} string 
+ * @returns 
+ */
+function encode(string) {
+	string = string.replace(/\r\n/g,"\n");
+	var utftext = "";
+	for (var n = 0; n < string.length; n++) {
+		var c = string.charCodeAt(n);
+		if (c < 128) {
+			utftext += String.fromCharCode(c);
+		}
+		else if((c > 127) && (c < 2048)) {
+			utftext += String.fromCharCode((c >> 6) | 192);
+			utftext += String.fromCharCode((c & 63) | 128);
+		}
+		else {
+			utftext += String.fromCharCode((c >> 12) | 224);
+			utftext += String.fromCharCode(((c >> 6) & 63) | 128);
+			utftext += String.fromCharCode((c & 63) | 128);
+		}
+	}
+	return utftext;
+}
+
+/**
  * Creating a normal card
  * @param {Object[]} e
  */
@@ -70,19 +111,14 @@ const createCard = (e) => {
 		card.style.backgroundColor = "#CCC";
 		card.style.color = "#000";
 	}
-	card.innerHTML = e.name;
+	var name = document.createElement('div');
+	name.className = "name";
+	name.innerHTML = e.name
+	card.appendChild(name);
 	card.className = "card"
 	card.id = e.name;
 	// card.style.backgroundColor = e.color;
 	card.style.display = "flex";
-	card.addEventListener("mouseover", () => {
-		var t1 = document.getElementById(e.name);
-		t1.id = "temp";
-		createDetailedCard(e);
-		var t2 = document.getElementById(e.name);
-		swapNodes(t1, t2);
-		t1.remove();
-	})
 	cardHolder.appendChild(card);
 }
 
@@ -92,7 +128,7 @@ const createCard = (e) => {
  */
 const createDetailedCard = (e) => {
 	var websites = document.createElement('p');
-	websites.innerHTML = "<a target=\"__blank\" href=\"https://github.com/topics/" + e.name + "?l=" + e.name + "\">Github</a> - <a target=\"__blank\" href=\"https://github.com/trending/" + e.name + "?since=daily&spoken_language_code=\">Github Trending</a>";
+	websites.innerHTML = `<a target=\"_blank\" href=\"https://github.com/topics/${e.name}l=${e.name}\">Github</a> - <a target=\"_blank\" href=\"https://github.com/trending/${e.name}?since=daily&spoken_language_code=\">Github Trending</a> - <a target=\"_blank\" href=\"https://google.com/search?q=${encode(`${e.name} ${e.type} language`)}\">Google</a>`;
 
 	var hexcode = document.createElement('p');
 	if (e.color != undefined) {
@@ -162,11 +198,11 @@ const createDetailedCard = (e) => {
 		card.style.color = "#000";
 	}
 	card.id = e.name;
-	cardHolder.appendChild(card);
+	temporaryHolder.appendChild(card);
 }
 
 /**
- * 
+ * Finds the language in the array and returns an array with that language
  * @param {*} languagename 
  * @returns Object/s
  */
@@ -179,8 +215,9 @@ languageArray.sort((a, b) => a.name.localeCompare(b.name));
 
 languageArray.forEach(e => {
 	// creting a card with element e
-	createCard(e);
+	createCard(e, cardHolder);
 });
+addObserver();
 
 // Adding the event listener to the input
 div.querySelector("input").addEventListener("input", (e) => {
@@ -200,6 +237,41 @@ div.querySelector("input").addEventListener("input", (e) => {
 
 	mappedArray.forEach(e => {
 		// creting a card with element e
-		createCard(filteredArray[e.index]);
+		createCard(filteredArray[e.index], temporaryHolder);
 	});
+	addObserver();
 });
+
+/**
+ * Function to add the observer
+ */
+function addObserver() {
+	const observer = new IntersectionObserver((entries) => {
+		entries.forEach((entry) => {
+			if(entry.target.id == "temp")
+				return
+			if(entry.isIntersecting) {
+				const name = entry.target.id;
+				const language = findLanguage(name);
+				var t1 = document.getElementById(name);
+				t1.id = "temp";
+				createDetailedCard(language[0]);
+				var t2 = document.getElementById(name);
+				swapNodes(t1, t2);
+				t1.remove();
+			} else {
+				const name = entry.target.id;
+				const language = findLanguage(name);
+				var t1 = document.getElementById(name);
+				t1.id = "temp";
+				createCard(language[0]);
+				var t2 = document.getElementById(name);
+				swapNodes(t1, t2);
+				t1.remove();
+			}
+		});
+	});
+	
+	const elements = document.querySelectorAll('.card');
+	elements.forEach((e) => observer.observe(e));
+}

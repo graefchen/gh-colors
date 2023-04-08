@@ -180,7 +180,7 @@ a:hover {
 	}
 }
 
-@media (min-width: 866px) {
+@media (min-width: 675px) {
 	.card {
 		width: 45%;
 	}
@@ -200,6 +200,10 @@ a:hover {
 	z-index: 10;
 }
 
+.card .name {
+	padding: 0px 7px;
+}
+
 .card .face {
 	transition: 0.5s;
 }
@@ -214,6 +218,7 @@ a:hover {
 	border-color: inherit;
 	transform: translateY(0px);
 	background-color: inherit;
+	padding: 0px 7px;
 }
 
 .card .face.face1 a {
