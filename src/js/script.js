@@ -259,15 +259,6 @@ function addObserver() {
 				var t2 = document.getElementById(name);
 				swapNodes(t1, t2);
 				t1.remove();
-			} else {
-				const name = entry.target.id;
-				const language = findLanguage(name);
-				var t1 = document.getElementById(name);
-				t1.id = "temp";
-				createCard(language[0]);
-				var t2 = document.getElementById(name);
-				swapNodes(t1, t2);
-				t1.remove();
 			}
 		});
 	});
