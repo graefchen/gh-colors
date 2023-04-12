@@ -103,7 +103,7 @@ const createCard = (e) => {
  */
 const createDetailedCard = (e) => {
 	var websites = document.createElement('p');
-	const name = e.name.replaceAll("+","p");
+	const name = e.name.replaceAll("++","pp");
 	websites.innerHTML = `<a target=\"_blank\" href=\"https://github.com/topics/${encodeURIComponent(name)}\">Github</a> - <a target=\"_blank\" href=\"https://github.com/trending/${encodeURIComponent(name)}?since=daily&spoken_language_code=\">Github Trending</a> - <a target=\"_blank\" href=\"https://google.com/search?q=${encodeURIComponent(`${name} ${e.type} language`)}\">Google</a>`;
 
 	var hexcode = document.createElement('p');
