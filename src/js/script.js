@@ -16,7 +16,7 @@ var temporaryHolder = document.getElementById("temp");
  * in this case it is special and therefor the returned hexcode
  * is either black(#000000) or white(#FFFFFF)
  * @see https://stackoverflow.com/a/35970186
- * @param {*} hex 
+ * @param {*} hex
  * @returns 
  */
 function invertColor(hex) {
@@ -186,6 +186,31 @@ const findLanguage = (languagename) => {
 	return languageArray.filter(e => e.name == languagename);
 }
 
+/**
+ * Function to add the observer
+ */
+function addObserver() {
+	const observer = new IntersectionObserver((entries) => {
+		entries.forEach((entry) => {
+			if(entry.target.id == "temp")
+				return
+			if(entry.isIntersecting) {
+				const name = entry.target.id;
+				const language = findLanguage(name);
+				var t1 = document.getElementById(name);
+				t1.id = "temp";
+				createDetailedCard(language[0]);
+				var t2 = document.getElementById(name);
+				swapNodes(t1, t2);
+				t1.remove();
+			}
+		});
+	});
+	
+	const elements = document.querySelectorAll('.card');
+	elements.forEach((e) => observer.observe(e));
+}
+
 // Sort the array... Could have done this at a different place...
 languageArray.sort((a, b) => a.name.localeCompare(b.name));
 
@@ -217,28 +242,3 @@ div.querySelector("input").addEventListener("input", (e) => {
 	});
 	addObserver();
 });
-
-/**
- * Function to add the observer
- */
-function addObserver() {
-	const observer = new IntersectionObserver((entries) => {
-		entries.forEach((entry) => {
-			if(entry.target.id == "temp")
-				return
-			if(entry.isIntersecting) {
-				const name = entry.target.id;
-				const language = findLanguage(name);
-				var t1 = document.getElementById(name);
-				t1.id = "temp";
-				createDetailedCard(language[0]);
-				var t2 = document.getElementById(name);
-				swapNodes(t1, t2);
-				t1.remove();
-			}
-		});
-	});
-	
-	const elements = document.querySelectorAll('.card');
-	elements.forEach((e) => observer.observe(e));
-}
