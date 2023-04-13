@@ -35,7 +35,7 @@ function invertColor(hex) {
 		b = parseInt(hex.slice(4, 6), 16);
 	// https://stackoverflow.com/a/3943023/112731
 	// slightly moddified for better look on some colours
-	return (r * 0.299 + g * 0.587 + b * 0.334) > 186
+	return (r * 0.299 + g * 0.587 + b * 0.114) > 150
 		? '#000000'
 		: '#FFFFFF';
 }
