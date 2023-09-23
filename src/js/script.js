@@ -4,7 +4,7 @@
 
 const languageArray = await (await fetch('./json/languages.json')).json();
 
-document.getElementById('search').value = "";
+document.getElementById('gh-colors-searchfield').value = "";
 
 // Getting the correct input value
 var div = document.getElementById("search-div");
