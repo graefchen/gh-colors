@@ -37,7 +37,9 @@ try {
 				const doc = yaml.load(rawData);
 				console.log("Generating to file...");
 				let languageArray = Object.entries(doc).map(([name, obj]) => ({ name, ...obj}));
-				let json = JSON.stringify(languageArray, null, 5);
+				// The version to make it better human readeable
+				// let json = JSON.stringify(languageArray, null, 4);
+				let json = JSON.stringify(languageArray, null, 0);
 				fs.writeFileSync(outputFile, json);
 				console.log("Finished to make the " + outputFile + " file!");
 			} catch (e) {
