@@ -2,14 +2,10 @@
 // import json from '../json/languages.json' assert { type: 'json' };
 // const languageArray = json;
 
-const languageArray = await (await fetch('./json/languages.json')).json();
+const languageArray = await (await fetch("./json/languages.json")).json();
 
-document.getElementById('gh-colors-searchfield').value = "";
-
-// Getting the correct input value
-var div = document.getElementById("search-div");
-var cardHolder = document.getElementById("cards");
-var temporaryHolder = document.getElementById("temp");
+const language_list = document.getElementById("language-list");
+languageArray.sort((a, b) => a.name.localeCompare(b.name));
 
 /**
  * A function that inverts an Color and returns the inverted hexcode
@@ -17,228 +13,102 @@ var temporaryHolder = document.getElementById("temp");
  * is either black(#000000) or white(#FFFFFF)
  * @see https://stackoverflow.com/a/35970186
  * @param {*} hex
- * @returns 
+ * @returns
  */
 function invertColor(hex) {
-	if (hex.indexOf('#') === 0) {
-		hex = hex.slice(1);
-	}
-	// convert 3-digit hex to 6-digits.
-	if (hex.length === 3) {
-		hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
-	}
-	if (hex.length !== 6) {
-		throw new Error('Invalid HEX color.');
-	}
-	var r = parseInt(hex.slice(0, 2), 16),
-		g = parseInt(hex.slice(2, 4), 16),
-		b = parseInt(hex.slice(4, 6), 16);
-	// https://stackoverflow.com/a/3943023/112731
-	// slightly moddified for better look on some colours
-	return (r * 0.299 + g * 0.587 + b * 0.114) > 150
-		? '#000000'
-		: '#FFFFFF';
-}
-
-/**
- * A simple function that swaps two nodes in the DOM in HTML
- * @see https://stackoverflow.com/a/44562952
- * @param {*} n1 
- * @param {*} n2 
- * @returns 
- */
-function swapNodes(n1, n2) {
-
-	var p1 = n1.parentNode;
-	var p2 = n2.parentNode;
-	var i1, i2;
-
-	if (!p1 || !p2 || p1.isEqualNode(n2) || p2.isEqualNode(n1)) return;
-
-	for (var i = 0; i < p1.children.length; i++) {
-		if (p1.children[i].isEqualNode(n1)) {
-			i1 = i;
-		}
-	}
-	for (var i = 0; i < p2.children.length; i++) {
-		if (p2.children[i].isEqualNode(n2)) {
-			i2 = i;
-		}
-	}
-
-	if (p1.isEqualNode(p2) && i1 < i2) {
-		i2++;
-	}
-	p1.insertBefore(n2, p1.children[i1]);
-	p2.insertBefore(n1, p2.children[i2]);
+  if (hex.indexOf("#") === 0) {
+    hex = hex.slice(1);
+  }
+  // convert 3-digit hex to 6-digits.
+  if (hex.length === 3) {
+    hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+  }
+  if (hex.length !== 6) {
+    throw new Error("Invalid HEX color.");
+  }
+  const r = parseInt(hex.slice(0, 2), 16),
+    g = parseInt(hex.slice(2, 4), 16),
+    b = parseInt(hex.slice(4, 6), 16);
+  // https://stackoverflow.com/a/3943023/112731
+  // slightly moddified for better look on some colours
+  return r * 0.299 + g * 0.587 + b * 0.114 > 150 ? "#000000" : "#FFFFFF";
 }
 
 /**
  * Creating a normal card
  * @param {Object[]} e
  */
-const createCard = (e) => {
-	var card = document.createElement('div');
-	if (e.color != undefined) {
-		card.style.color = invertColor(e.color);
-		card.style.backgroundColor = e.color;
-	} else {
-		card.style.backgroundColor = "#CCC";
-		card.style.color = "#000";
-	}
-	var name = document.createElement('div');
-	name.className = "name";
-	name.innerHTML = e.name
-	card.appendChild(name);
-	card.className = "card"
-	card.id = e.name;
-	// card.style.backgroundColor = e.color;
-	card.style.display = "flex";
-	cardHolder.appendChild(card);
-}
+const createRegister = (e) => {
+  const language = document.createElement("li");
+  let title_bg,
+    title_fg,
+    extensions = "",
+    filenames = "",
+    interpreters = "";
+  if (e.color != undefined) {
+    title_bg = e.color;
+    title_fg = invertColor(e.color);
+  } else {
+    title_bg = "#CCC";
+    title_fg = "#000";
+  }
 
-/**
- * Creating a detailed card
- * @param {Object[]} e 
- */
-const createDetailedCard = (e) => {
-	var websites = document.createElement('p');
-	const name = e.name.replaceAll("++","pp").replaceAll("#", "sharp").replaceAll("*","star");
-	websites.innerHTML = `<a target=\"_blank\" href=\"https://github.com/topics/${encodeURIComponent(name)}\">Github</a> - <a target=\"_blank\" href=\"https://github.com/trending/${encodeURIComponent(name)}?since=daily&spoken_language_code=\">Github Trending</a> - <a target=\"_blank\" href=\"https://google.com/search?q=${encodeURIComponent(`${name} ${e.type} language`)}\">Google</a>`;
+  if (e.extensions != undefined) {
+    e.extensions.forEach((e) => {
+      extensions += `<code>${e}</code> `;
+    });
+  } else {
+    extensions += "No extensions.";
+  }
 
-	var hexcode = document.createElement('p');
-	if (e.color != undefined) {
-		hexcode.innerHTML = "Hexcode: " + e.color.toUpperCase();
-	} else {
-		hexcode.innerHTML = "No Color. (Using #CCC)";
-	}
+  if (e.filenames != undefined) {
+    e.filenames.forEach((e) => {
+      filenames += `<code>${e}</code> `;
+    });
+  } else {
+    filenames += "No files.";
+  }
 
-	var type = document.createElement('p');
-	// Capitalise the first char
-	const nameStr = e.type;
-	const nameStr2 = nameStr.charAt(0).toUpperCase() + nameStr.slice(1);
-	// Adding the Type
-	type.innerHTML = "Type: " + nameStr2;
+  if (e.interpreters != undefined) {
+    e.interpreters.forEach((e) => {
+      interpreters += `<code>${e}</code> `;
+    });
+  } else {
+    interpreters += "No Interpreters.";
+  }
 
-	var extensionList = document.createElement('p');
-	extensionList.innerHTML = "Extensions:"
+  language.innerHTML =
+    `<h1 class="language-header" style="color: ${title_fg}; background-color: ${title_bg};">${e.name}</h1><table class="language-table"><tbody><tr><td>Hexcode</td><td><code>${title_bg}</code></td></tr><tr><td>Type</td><td><code>${e.type}</code></td></tr><tr><td>Extensions</td><td>${extensions}</td></tr><tr><td>Filenames</td><td>${filenames}</td></tr><tr><td>Interpreters</td><td>${interpreters}</td></tr></tbody></table>`;
+  language.className = "language-entry";
+  language_list.appendChild(language);
+};
 
-	var exlist = document.createElement('ul');
-	if (e.extensions != undefined) {
-		e.extensions.forEach(e => {
-			var listChild = document.createElement('li');
-			listChild.innerHTML = e;
-			exlist.appendChild(listChild);
-		});
-	} else {
-		extensionList.innerHTML = "Extensions: No Extensions"
-	}
-
-	var filenameList = document.createElement('p');
-	filenameList.innerHTML = "Filenames:";
-
-	var flist = document.createElement('ul');
-	if (e.filenames != undefined) {
-		e.filenames.forEach(e => {
-			var listChild = document.createElement('li');
-			listChild.innerHTML = e;
-			flist.appendChild(listChild);
-		});
-	} else {
-		filenameList.innerHTML = "Filenames: No Filenames";
-	}
-
-	var face2 = document.createElement('div');
-	face2.className = "face face2";
-	extensionList.appendChild(exlist);
-	filenameList.appendChild(flist);
-	face2.appendChild(websites);
-	face2.appendChild(hexcode);
-	face2.appendChild(type);
-	face2.appendChild(extensionList);
-	face2.appendChild(filenameList);
-
-	var face1 = document.createElement('div');
-	face1.className = "face face1";
-	face1.innerHTML = "<p>" + e.name; + "</p>";
-
-	var card = document.createElement('div');
-	card.appendChild(face1);
-	card.appendChild(face2);
-	card.className = "card"
-	if (e.color != undefined) {
-		card.style.color = invertColor(e.color);
-		card.style.backgroundColor = e.color;
-	} else {
-		card.style.backgroundColor = "#CCC";
-		card.style.color = "#000";
-	}
-	card.id = e.name;
-	temporaryHolder.appendChild(card);
-}
-
-/**
- * Finds the language in the array and returns an array with that language
- * @param {*} languagename 
- * @returns Object/s
- */
-const findLanguage = (languagename) => {
-	return languageArray.filter(e => e.name == languagename);
-}
-
-/**
- * Function to add the observer
- */
-function addObserver() {
-	const observer = new IntersectionObserver((entries) => {
-		entries.forEach((entry) => {
-			if(entry.target.id == "temp")
-				return
-			if(entry.isIntersecting) {
-				const name = entry.target.id;
-				const language = findLanguage(name);
-				var t1 = document.getElementById(name);
-				t1.id = "temp";
-				createDetailedCard(language[0]);
-				var t2 = document.getElementById(name);
-				swapNodes(t1, t2);
-				t1.remove();
-			}
-		});
-	});
-	
-	const elements = document.querySelectorAll('.card');
-	elements.forEach((e) => observer.observe(e));
-}
-
-// Sort the array... Could have done this at a different place...
-languageArray.sort((a, b) => a.name.localeCompare(b.name));
-
-languageArray.forEach(e => {
-	// creting a card with element e
-	createCard(e, cardHolder);
+languageArray.forEach((e) => {
+  createRegister(e);
 });
-addObserver();
 
 // Adding the event listener to the input
-div.querySelector("input").addEventListener("input", (e) => {
-	// Clearing out the div
-	cardHolder.innerHTML = "";
-	// Getting the value of what is written in the field
-	var st2 = e.target.value.toLowerCase();
+document
+  .getElementById("gh-colors-searchfield")
+  .addEventListener("input", (e) => {
+    // Clearing out the list
+    language_list.innerHTML = "";
+    // Getting the value of what is written in the field
+    const st2 = e.target.value;
 
-	const filteredArray = languageArray.filter(v => v.name.toLowerCase().indexOf(st2) >= 0);
-	const mappedArray = filteredArray.map((value, index) => {
-		var position = value.name.toLowerCase().indexOf(st2);
-		var name = value.name;
-		return ({ name, index, position });
-	});
+    // filtering the array
+    const filteredArray = languageArray.filter((v) => v.name.indexOf(st2) >= 0);
+    // This here looks like a very very strange way to do the array
+    // Todo: Relook how to maybe refactor it
+    const mappedArray = filteredArray.map((value, index) => {
+      const position = value.name.toLowerCase().indexOf(st2);
+      const name = value.name;
+      return { name, index, position };
+    });
 
-	mappedArray.sort((a, b) => a.position - b.position);
+    mappedArray.sort((a, b) => a.position - b.position);
 
-	mappedArray.forEach(e => {
-		// creting a card with element e
-		createCard(filteredArray[e.index], temporaryHolder);
-	});
-	addObserver();
-});
+    mappedArray.forEach((e) => {
+      createRegister(filteredArray[e.index]);
+    });
+  });

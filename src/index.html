@@ -1,47 +1,42 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>gh-colors</title>
-	<link rel="stylesheet" href="css/styles.css">
+	<link rel="stylesheet" href="css/styles.css" />
+	<script type="module" src="js/script.js" defer></script>
 </head>
 
-<body>
-	<div class="outer-wrapper">
-		<main>
-			<div class="search-wrapper">
-				<div class="title">
-					<h1 id="title-name">gh-colors</h1>
-					<p id="title-text">A small website that shows you the color and more information github uses of the searched (programming) language.</p>
-				</div>
-				<div class="search-inner-wrapper">
-					<div class="search-field" id="search-div">
-						<!-- Search here for the color for a specific language used on github -->
-						<input id="gh-colors-searchfield" class="search-input" type="text"
-						placeholder="Search here for the language" />
-					</div>
-				</div>
-			</div>
-			<div id="cards" class="cards-wrapper">
-			</div>
-			<p style="text-align: center;">
-				<noscript>You sadly need to use Java Script for this Website. Activate JavaScript and it will work.</noscript>
+<body id="flex">
+	<main>
+		<div class="search-wrapper">
+			<h1 id="title-name">gh-colors</h1>
+			<p id="title-text">
+				A small website that shows you the color and more information github
+				uses of the searched (programming) language.
 			</p>
-			<!-- Just to let the last card look good when opened and closed -->
-			<div style="height: 1100px;">
-			</div>
-			<p style="text-align: center;">Some footer, so that it will not be lonely here a teddy 🧸
-				made by <a href="https://github.com/graefchen" target="_blank">graefchen</a><br>
-				this website does not use any cookies
+			<hr />
+			<!-- Search here for the color for a specific language used on github -->
+			<input id="gh-colors-searchfield" class="search-input" type="text" placeholder="Search" />
+			<p>
+				For example: <code>extension:"lua"</code> <code>type:"markup"</code>
+				<code>file:"cabal.config"</code>
 			</p>
-		</main>
-		<!-- Temporary div to put new cards in there and then swap it out -->
-		<div id="temp" style="width: 0; height: 0;"></div>
-	</div>
-	
-	<!-- Post load of a script -->
-	<script type="module" src="js/script.js"></script>
+		</div>
+		<ol id="language-list"></ol>
+		<p style="text-align: center">
+			<noscript>You sadly need to use Java Script for this Website. Activate
+				JavaScript and it will work.</noscript>
+		</p>
+	</main>
+	<footer>
+		<p style="text-align: center">
+			Some footer, so that it will not be lonely here a teddy 🧸 made by
+			<a href="https://github.com/graefchen" target="_blank">graefchen</a><br />
+			this website does not use any cookies
+		</p>
+	</footer>
 </body>
 
 </html>
