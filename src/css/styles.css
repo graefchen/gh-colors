@@ -32,9 +32,9 @@ body {
 	line-height: 1.5;
 	color: var(--color-fg);
 	background-color: var(--color-bg);
-	padding-left: 0.5rem;
-	padding-right: 0.5rem;
-	font-size: 18px;
+	padding-left: 0.25rem;
+	padding-right: 0.25rem;
+	font-size: 15px;
 	overflow-x: hidden;
 }
 
@@ -74,7 +74,7 @@ input {
 	border-radius: 4px;
 }
 
-input[type="teyt" i] {
+input[type="text" i] {
 	appearance: auto;
 }
 
@@ -121,7 +121,7 @@ code {
 
 .language-entry {
 	padding-top: 2rem;
-	width: 100%;
+	max-width: 100%;
 }
 
 .language-header {
@@ -136,6 +136,5 @@ code {
 }
 
 .language-table>tbody>tr>td {
-	padding-right: 4px;
-	padding: 4px;
+	padding: 2px;
 }
