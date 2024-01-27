@@ -1,140 +1,145 @@
 :root {
-	/* --color-bg: #c9d1d9; */
-	--color-bg: #121212;
-	--color-fg: #ffffff;
-	--color-ac: #ff5000;
-	--color-field: #1f1f1f;
-	--color-border: #c9d1d9;
-	/* border look stuff */
-	--small-border: 5px;
+  /* --color-bg: #c9d1d9; */
+  --color-bg: #121212;
+  --color-fg: #ffffff;
+  --color-ac: #ff5000;
+  --color-field: #1f1f1f;
+  --color-border: #c9d1d9;
+  /* border look stuff */
+  --small-border: 5px;
 }
 
 * {
-	padding: 0;
-	margin-top: 0;
-	margin-bottom: 0;
-	box-sizing: border-box;
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  box-sizing: border-box;
 }
 
 body {
-	font-family:
-		system-ui,
-		-apple-system,
-		BlinkMacSystemFont,
-		"Segoe UI",
-		Roboto,
-		Oxygen,
-		Ubuntu,
-		Cantarell,
-		"Open Sans",
-		"Helvetica Neue",
-		sans-serif;
-	line-height: 1.5;
-	color: var(--color-fg);
-	background-color: var(--color-bg);
-	padding-left: 0.25rem;
-	padding-right: 0.25rem;
-	font-size: 15px;
-	overflow-x: hidden;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    "Open Sans",
+    "Helvetica Neue",
+    sans-serif;
+  line-height: 1.5;
+  color: var(--color-fg);
+  background-color: var(--color-bg);
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+  font-size: 15px;
 }
 
 #flex {
-	display: flex;
-	flex-direction: column;
-	min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-#flex>footer {
-	margin-top: auto;
+#flex > footer {
+  margin-top: auto;
 }
 
 main {
-	margin-left: auto;
-	margin-right: auto;
-	max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 900px;
 }
 
 footer {
-	text-align: center;
-	padding-top: 2rem;
-	padding-bottom: 0.5rem;
+  text-align: center;
+  padding-top: 2rem;
+  padding-bottom: 0.5rem;
 }
 
 a {
-	color: var(--color-ac);
+  color: var(--color-ac);
 }
 
 a:hover {
-	color: var(--color-fg);
-	background-color: var(--color-ac);
+  color: var(--color-fg);
+  background-color: var(--color-ac);
 }
 
 input {
-	border-style: solid;
-	border-radius: 4px;
+  border-style: solid;
+  border-radius: 4px;
 }
 
 input[type="text" i] {
-	appearance: auto;
+  appearance: auto;
 }
 
 hr {
-	border-color: var(--color-border);
-	margin-top: 0.5rem;
-	margin-bottom: 0.5rem;
+  border-color: var(--color-border);
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 ol {
-	display: block;
+  display: block;
 }
 
 li {
-	list-style-type: none;
+  list-style-type: none;
 }
 
 code {
-	background-color: var(--color-field);
-	border-radius: var(--small-border);
-	padding-left: 0.25rem;
-	padding-right: 0.25rem;
+  background-color: var(--color-field);
+  border-radius: var(--small-border);
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
 }
 
 .search-input {
-	display: block;
-	background-color: var(--color-field);
-	color: var(--color-fg);
-	width: 100%;
-	padding: 16px;
-	font-size: 1rem;
-	border-color: var(--color-field);
-	margin-top: 1rem;
-	margin-bottom: 1rem;
+  display: block;
+  background-color: var(--color-field);
+  color: var(--color-fg);
+  width: 100%;
+  padding: 16px;
+  font-size: 1rem;
+  border-color: var(--color-field);
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 .search-input:active {
-	border-color: var(--color-border);
+  border-color: var(--color-border);
 }
 
 .search-input:hover {
-	border-color: var(--color-border);
+  border-color: var(--color-border);
 }
 
 .language-entry {
-	padding-top: 2rem;
-	max-width: 100%;
+  padding-top: 2rem;
+  max-width: 100%;
 }
 
 .language-header {
-	width: fit-content;
-	border-radius: var(--small-border);
-	padding-left: 0.6rem;
-	padding-right: 0.6rem;
+  width: fit-content;
+  border-radius: var(--small-border);
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
 }
 
-.language-table>tbody>tr>td:first-child {
-	padding-right: 24px;
+.language-header > a {
+  text-decoration: none;
+  background-color: inherit;
+  color: inherit;
 }
 
-.language-table>tbody>tr>td {
-	padding: 2px;
+.language-table > tbody > tr > td:first-child {
+  padding-right: 24px;
+}
+
+.language-table > tbody > tr > td {
+  padding: 2px;
 }

@@ -2,7 +2,7 @@
 // import json from '../json/languages.json' assert { type: 'json' };
 // const languageArray = json;
 
-const languageArray = await (await fetch("./json/languages.json")).json();
+const languageArray = await(await fetch("./json/languages.json")).json();
 
 const language_list = document.getElementById("language-list");
 languageArray.sort((a, b) => a.name.localeCompare(b.name));
@@ -77,8 +77,10 @@ const createRegister = (e) => {
     interpreters += "No Interpreters.";
   }
 
+  const link = `https://github.com/topics/${e.name.replaceAll("++", "pp").replaceAll("#", "sharp").replaceAll("*", "star")}`;
+
   language.innerHTML =
-    `<h1 class="language-header" style="color: ${title_fg}; background-color: ${title_bg};">${e.name}</h1><table class="language-table"><tbody><tr><td>Hexcode</td><td><code>${title_bg}</code></td></tr><tr><td>Type</td><td><code>${e.type}</code></td></tr><tr><td>Extensions</td><td>${extensions}</td></tr><tr><td>Filenames</td><td>${filenames}</td></tr><tr><td>Interpreters</td><td>${interpreters}</td></tr></tbody></table>`;
+    `<h1 class="language-header" style="color: ${title_fg}; background-color: ${title_bg};" ><a target="_blank" href="${link}">${e.name}</a></h1><table class="language-table"><tbody><tr><td>Hexcode</td><td><code>${title_bg}</code></td></tr><tr><td>Type</td><td><code>${e.type}</code></td></tr><tr><td>Extensions</td><td>${extensions}</td></tr><tr><td>Filenames</td><td>${filenames}</td></tr><tr><td>Interpreters</td><td>${interpreters}</td></tr></tbody></table>`;
   language.className = "language-entry";
   language_list.appendChild(language);
 };
@@ -101,7 +103,7 @@ document
     // This here looks like a very very strange way to do the array
     // Todo: Relook how to maybe refactor it
     const mappedArray = filteredArray.map((value, index) => {
-      const position = value.name.toLowerCase().indexOf(st2);
+      const position = value.name.indexOf(st2);
       const name = value.name;
       return { name, index, position };
     });
