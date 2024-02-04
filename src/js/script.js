@@ -77,15 +77,12 @@ const createRegister = (e) => {
     interpreters += "No Interpreters.";
   }
 
-  const link = `https://github.com/topics/${
-    e.name.replaceAll("++", "pp").replaceAll("#", "sharp").replaceAll(
-      "*",
-      "star",
-    )
-  }`;
+  const link = `https://github.com/topics/${e.name
+    .replaceAll("++", "pp")
+    .replaceAll("#", "sharp")
+    .replaceAll("*", "star")}`;
 
-  language.innerHTML =
-    `<h1 class="language-header" style="color: ${title_fg}; background-color: ${title_bg};" ><a target="_blank" href="${link}">${e.name}</a></h1><table class="language-table"><tbody><tr><td>Hexcode</td><td><code>${title_bg}</code></td></tr><tr><td>Type</td><td><code>${e.type}</code></td></tr><tr><td>Extensions</td><td>${extensions}</td></tr><tr><td>Filenames</td><td>${filenames}</td></tr><tr><td>Interpreters</td><td>${interpreters}</td></tr></tbody></table>`;
+  language.innerHTML = `<h1 class="language-header" style="color: ${title_fg}; background-color: ${title_bg};" ><a target="_blank" href="${link}">${e.name}</a></h1><table class="language-table"><tbody><tr><td>Hexcode</td><td><code>${title_bg}</code></td></tr><tr><td>Type</td><td><code>${e.type}</code></td></tr><tr><td>Extensions</td><td>${extensions}</td></tr><tr><td>Filenames</td><td>${filenames}</td></tr><tr><td>Interpreters</td><td>${interpreters}</td></tr></tbody></table>`;
   language.className = "language-entry";
   language_list.appendChild(language);
 };
