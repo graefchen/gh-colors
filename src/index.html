@@ -1,49 +1,42 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>gh-colors</title>
-    <link rel="stylesheet" href="css/styles.css" />
-    <script type="module" src="js/script.js" defer></script>
-  </head>
 
-  <body id="flex">
-    <main>
-      <div class="search-wrapper">
-        <h1 id="title-name">gh-colors</h1>
-        <p id="title-text">
-          A small website that shows you the color and more information github
-          uses of the searched (programming) language.
-        </p>
-        <hr />
-        <!-- Search here for the color for a specific language used on github -->
-        <input
-          id="gh-colors-searchfield"
-          class="search-input"
-          type="search"
-          placeholder="Search"
-        />
-        <p>
-          For example: <code>Lua</code>
-          <!-- <code>extension:lua</code> <code>type:markup</code> -->
-          <!-- <code>file:cabal.config</code> -->
-        </p>
-      </div>
-      <ol id="language-list"></ol>
-      <p style="text-align: center">
-        <noscript
-          >You sadly need to use Java Script for this Website. Activate
-          JavaScript and it will work.</noscript
-        >
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>gh-colors</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <script type="module" src="js/script.js" defer></script>
+</head>
+
+<body id="flex">
+  <main>
+    <div class="search-wrapper">
+      <h1 id="title-name">gh-colors</h1>
+      <p id="title-text">
+        A small website that shows you the color and more information github
+        uses of the searched (programming) language.
       </p>
-    </main>
-    <footer>
-      <p style="text-align: center">
-        Some footer, so that it will not be lonely here a teddy 🧸 made by
-        <a href="https://github.com/graefchen" target="_blank">graefchen</a
-        ><br />
-        this website does not use any cookies
+      <hr />
+      <!-- Search here for the color for a specific language used on github -->
+      <input id="gh-colors-searchfield" class="search-input" type="search" placeholder="Search" />
+      <p>
+        For example: <code>Rust</code> <code>extension:lua</code> <code>type:markup</code>
+        <code>file:cabal.config</code>
       </p>
-    </footer>
-  </body>
+    </div>
+    <ol id="language-list"></ol>
+    <p style="text-align: center">
+      <noscript>You sadly need to use Java Script for this Website. Activate
+        JavaScript and it will work.</noscript>
+    </p>
+  </main>
+  <footer>
+    <p style="text-align: center">
+      Some footer, so that it will not be lonely here a teddy 🧸 made by
+      <a href="https://github.com/graefchen" target="_blank">graefchen</a><br />
+      this website does not use any cookies
+    </p>
+  </footer>
+</body>
+
 </html>

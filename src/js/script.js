@@ -2,7 +2,7 @@
 // import json from '../json/languages.json' assert { type: 'json' };
 // const languageArray = json;
 
-const languageArray = await (await fetch("./json/languages.json")).json();
+const languageArray = await(await fetch("./json/languages.json")).json();
 
 const language_list = document.getElementById("language-list");
 languageArray.sort((a, b) => a.name.localeCompare(b.name));
@@ -91,6 +91,24 @@ languageArray.forEach((e) => {
   createRegister(e);
 });
 
+const filter_extension = (v, e) => {
+  let fe = [];
+  if (v.extensions != undefined) {
+    fe = v.extensions.filter((f) => f.indexOf(e) >= 0);
+    fe = fe.sort((a, b) => a - b);
+  }
+  return fe.at(0) == undefined ? -1 : fe.at(0).indexOf(e);
+}
+
+const filter_file = (v, f) => {
+  let ff = [];
+  if (v.filenames != undefined) {
+    ff = v.filenames.filter((e) => e.indexOf(f) >= 0);
+    ff = ff.sort((a, b) => a - b);
+  }
+  return ff.at(0) == undefined ? -1 : ff.at(0).indexOf(f);
+}
+
 // Adding the event listener to the input
 document
   .getElementById("gh-colors-searchfield")
@@ -100,19 +118,71 @@ document
     // Getting the value of what is written in the field
     const st2 = e.target.value;
 
-    // filtering the array
-    const filteredArray = languageArray.filter((v) => v.name.indexOf(st2) >= 0);
-    // This here looks like a very very strange way to do the array
-    // Todo: Relook how to maybe refactor it
-    const mappedArray = filteredArray.map((value, index) => {
-      const position = value.name.indexOf(st2);
-      const name = value.name;
-      return { name, index, position };
-    });
+    const string_array = st2.split(":");
+    switch (string_array.at(0)) {
+      case "extension": {
+        const ex = string_array.at(1);
+        const filteredArray = languageArray.filter((v) => filter_extension(v, ex) >= 0);
 
-    mappedArray.sort((a, b) => a.position - b.position);
+        const mappedArray = filteredArray.map((value, index) => {
+          const position = filter_extension(value, ex);
+          const name = value.name;
+          return { name, index, position };
+        });
 
-    mappedArray.forEach((e) => {
-      createRegister(filteredArray[e.index]);
-    });
+        mappedArray.sort((a, b) => a.position - b.position);
+
+        mappedArray.forEach((e) => {
+          createRegister(filteredArray[e.index]);
+        });
+      } break;
+
+      case "type": {
+        const t = string_array.at(1);
+        const filteredArray = languageArray.filter((v) => v.type.indexOf(t) >= 0);
+
+        const mappedArray = filteredArray.map((value, index) => {
+          const position =  value.type.indexOf(t);
+          const name = value.name;
+          return { name, index, position };
+        });
+
+        mappedArray.forEach((e) => {
+          createRegister(filteredArray[e.index]);
+        });
+      } break;
+
+      case "file": {
+        const fn = string_array.at(1);
+        const filteredArray = languageArray.filter((v) => filter_file(v, fn) >= 0);
+
+        const mappedArray = filteredArray.map((value, index) => {
+          const position = filter_file(value, fn);
+          const name = value.name;
+          return { name, index, position };
+        });
+
+        mappedArray.sort((a, b) => a.position - b.position);
+
+        mappedArray.forEach((e) => {
+          createRegister(filteredArray[e.index]);
+        });
+      } break;
+
+      default: {
+        const filteredArray = languageArray.filter((v) => v.name.indexOf(st2) >= 0);
+
+        const mappedArray = filteredArray.map((value, index) => {
+          const position = value.name.indexOf(st2);
+          const name = value.name;
+          return { name, index, position };
+        });
+
+        mappedArray.sort((a, b) => a.position - b.position);
+
+        mappedArray.forEach((e) => {
+          createRegister(filteredArray[e.index]);
+        });
+      } break;
+    }
   });
